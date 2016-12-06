@@ -111,12 +111,14 @@ class FlysystemFactory {
   public function ensure($force = FALSE) {
     $errors = array();
 
-    foreach ($this->settings as $scheme => $configuration) {
+    if ($this->settings) {
+      foreach ($this->settings as $scheme => $configuration) {
 
-      foreach ($this->getPlugin($scheme)->ensure($force) as $error) {
+        foreach ($this->getPlugin($scheme)->ensure($force) as $error) {
 
-        $errors[$scheme][] = $error;
-        watchdog('flysystem', $error['message'], $error['context'], $error['severity']);
+          $errors[$scheme][] = $error;
+          watchdog('flysystem', $error['message'], $error['context'], $error['severity']);
+        }
       }
     }
 
