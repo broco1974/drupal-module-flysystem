@@ -4,4 +4,4 @@ package = Flysystem
 core = 7.x
 php = 5.4
 
-dependencies[] = composer_autoloader
+;dependencies[] = composer_manager

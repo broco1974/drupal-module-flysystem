@@ -123,19 +123,21 @@ function flysystem_stream_wrappers() {
   // This hook is called before hook_init(), so we have to manually register
   // the autoloader. We also need to handle module upgrades where
   // composer_manager might not be enabled yet.
-  if (!module_exists('composer_manager')) {
+  if (!module_exists('composer_manager') and !module_exists('composer_autoloader')) {
     return $wrappers;
   }
 
   // If the module has been enabled, but the user didn't update composer
   // libraries, prevent failing entirely.
-  try {
-    composer_manager_register_autoloader();
-  }
-  catch (RuntimeException $e) {
-    watchdog('flysystem', 'The Composer autoloader could not be registered. Run drush composer-rebuild and drush composer-manager update to update your vendor directory.');
-    watchdog_exception('flysystem', $e);
-    return $wrappers;
+  if (module_exists('composer_manager')) {
+    try {
+      composer_manager_register_autoloader();
+    }
+    catch (RuntimeException $e) {
+      watchdog('flysystem', 'The Composer autoloader could not be registered. Run drush composer-rebuild and drush composer-manager update to update your vendor directory.');
+      watchdog_exception('flysystem', $e);
+      return $wrappers;
+    }
   }
 
   if (!flysystem_dependencies_check()) {
