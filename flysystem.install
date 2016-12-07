@@ -49,15 +49,15 @@ function flysystem_requirements($phase) {
  *   An appropriate value for hook_requirements.
  */
 function _flysystem_convert_watchdog_to_requirements($severity) {
-  if ($level <= WATCHDOG_ERROR) {
+  if ($severity <= WATCHDOG_ERROR) {
     return REQUIREMENT_ERROR;
   }
 
-  if ($level == WATCHDOG_WARNING) {
+  if ($severity == WATCHDOG_WARNING) {
     return REQUIREMENT_WARNING;
   }
 
-  if ($level == WATCHDOG_NOTICE || $level == WATCHDOG_INFO) {
+  if ($severity == WATCHDOG_NOTICE || $severity == WATCHDOG_INFO) {
     return REQUIREMENT_INFO;
   }
 
