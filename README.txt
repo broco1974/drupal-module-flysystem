@@ -69,6 +69,8 @@ $schemes = array(
       'permPrivate' => 0700,
       'permPublic' => 0700,
       'transferMode' => FTP_BINARY,
+
+      'externalUrlBase' => 'https://example.com/media',
     ),
   ),
 );

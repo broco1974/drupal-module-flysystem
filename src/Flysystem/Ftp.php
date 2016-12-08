@@ -40,6 +40,18 @@ class Ftp extends FlysystemPluginBase {
   /**
    * {@inheritdoc}
    */
+  public function getExternalUrl($uri) {
+    $path = str_replace('\\', '/', $this->getTarget($uri));
+    if (!empty($this->configuration['externalUrlBase'])) {
+      $base = $this->configuration['externalUrlBase'];
+      return url($base . '/' . $path, array('absolute' => TRUE));
+    }
+    return parent::getExternalUrl($uri);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getAdapter() {
     try {
       $adapter = new FtpAdapter($this->configuration);
